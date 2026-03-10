@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import { db } from './db.mjs';
 
+import {registerUser, getUserByCredentials, getUserById } from './dao.mjs';
 
 const app = express();
 const port = 3001;
