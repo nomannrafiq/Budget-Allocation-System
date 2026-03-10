@@ -1,0 +1,56 @@
+### Register Admin User
+
+POST http://localhost:3001/api/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "noman",
+    "password": "123",
+    "role": "admin"
+}
+
+
+### Register Member User 1
+POST http://localhost:3001/api/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "sameer",
+    "password": "123",
+    "role": "member"
+}
+
+### Register Member User 2
+POST http://localhost:3001/api/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "rafay",
+    "password": "123",
+    "role": "member"
+}
+
+### Login Admin
+POST http://localhost:3001/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "noman",
+    "password": "123"
+}
+
+### Login Member
+POST http://localhost:3001/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "sameer",
+    "password": "123"
+}
+
+### Logout
+POST http://localhost:3001/api/auth/logout HTTP/1.1
+Content-Type: application/json
+
+##################################
+
