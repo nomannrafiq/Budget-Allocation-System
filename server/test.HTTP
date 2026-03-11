@@ -96,3 +96,6 @@ Content-Type: application/json
 
 ### Delete Proposal (id=1)
 DELETE http://localhost:3001/api/proposals/2
+
+### Get Proposals by User (userId=2)
+GET http://localhost:3001/api/proposals/user/1

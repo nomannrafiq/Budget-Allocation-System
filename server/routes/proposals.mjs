@@ -1,6 +1,7 @@
 import express from 'express';
 import {
-  getAllProposals, getProposalById, createProposal, updateProposal, deleteProposal 
+  getAllProposals, getProposalById, createProposal, updateProposal, deleteProposal,
+  getProposalsByUserId 
   
 } from '../dao.mjs';
 
@@ -33,6 +34,23 @@ router.get('/:id', async (req, res) => {
     res.json(proposal);
   } catch (err) {
     console.error('Error fetching proposal:', err.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// GET /api/proposals/user/:userId - Get proposals by user ID
+router.get('/user/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const proposals = await getProposalsByUserId(userId);
+    
+    if (!proposals || proposals.length === 0) {
+      return res.status(404).json({ message: 'No proposals found for this user' });
+    }
+
+    res.json(proposals);
+  } catch (err) {
+    console.error('Error fetching user proposals:', err.message);
     res.status(500).json({ message: 'Internal server error' });
   }
 });

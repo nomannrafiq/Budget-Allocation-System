@@ -147,6 +147,22 @@ export const getProposalById = (id) => {
   });
 };
 
+// ===== GET USER PROPOSALS =====
+
+export const getProposalsByUserId = (userId) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'SELECT * FROM Proposals WHERE userId = ?';
+    db.all(sql, [userId], (err, rows) => {
+      if (err) {
+        console.error('Error fetching user proposals:', err.message);
+        reject(err);
+      } else {
+        resolve(rows || []);
+      }
+    });
+  });
+};
+
 // ===== CREATE PROPOSAL =====
 
 export const createProposal = (userId, description, cost) => {
@@ -193,5 +209,7 @@ export const deleteProposal = (id) => {
     });
   });
 };
+
+
 
 
