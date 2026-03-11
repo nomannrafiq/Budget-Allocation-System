@@ -117,3 +117,20 @@ export const getUserById = (id) => {
     });
   });
 };
+
+// ===== PROPOSAL FUNCTIONS =====
+
+// List all proposals
+export const getAllProposals = () => {
+  return new Promise((resolve, reject) => {
+    db.all('SELECT * FROM Proposals', (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows || []);
+      }
+    });
+  });
+};
+
+
