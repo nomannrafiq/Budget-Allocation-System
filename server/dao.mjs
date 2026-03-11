@@ -382,3 +382,25 @@ export const deleteVote = (userId, proposalId) => {
     });
   });
 };
+
+
+// ===== GET VOTED PROPOSALS =====
+
+export const getScoredProposals = (userId) => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT p.id, p.userId, p.description, p.cost, v.score
+      FROM Proposals p
+      JOIN Votes v ON p.id = v.proposalId
+      WHERE v.userId = ?
+    `;
+    db.all(query, [userId], (err, rows) => {
+      if (err) {
+        console.error('Error fetching scored proposals:', err.message);
+        reject(new Error('Database error: ' + err.message));
+      } else {
+        resolve(rows || []);
+      }
+    });
+  });
+};

@@ -1,5 +1,5 @@
 import express from 'express';
-import { castVote, updateVote, deleteVote } from '../dao.mjs';
+import { castVote, updateVote, deleteVote, getScoredProposals  } from '../dao.mjs';
 
 const router = express.Router();
 
@@ -91,6 +91,23 @@ router.delete('/', async (req, res) => {
     }
     
     res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// GET /api/votes/user/:userId - Get proposals user has voted on
+router.get('/user/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const proposals = await getScoredProposals(userId);
+    
+    if (!proposals || proposals.length === 0) {
+      return res.status(404).json({ message: 'No voted proposals found' });
+    }
+
+    res.json(proposals);
+  } catch (err) {
+    console.error('Error fetching voted proposals:', err.message);
+    res.status(500).json({ message: 'Internal server error', error: err.message });
   }
 });
 

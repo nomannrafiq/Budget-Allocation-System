@@ -98,7 +98,7 @@ Content-Type: application/json
 DELETE http://localhost:3001/api/proposals/2
 
 ### Get Proposals by User (userId=2)
-GET http://localhost:3001/api/proposals/user/1
+GET http://localhost:3001/api/proposals/user/2
 
 
 ### Create Proposal by userId=2
@@ -144,8 +144,8 @@ POST http://localhost:3001/api/votes
 Content-Type: application/json
 
 {
-    "userId": 998,
-    "proposalId": 10,
+    "userId": 1,
+    "proposalId": 3,
     "score": 2
 }
 
@@ -155,8 +155,8 @@ PUT http://localhost:3001/api/votes
 Content-Type: application/json
 
 {
-    "userId": 2,
-    "proposalId": 2,
+    "userId": 1,
+    "proposalId": 3,
     "score": 1
 }
 
@@ -175,6 +175,10 @@ DELETE http://localhost:3001/api/votes
 Content-Type: application/json
 
 {
-    "userId": 2,
-    "proposalId": 1
+    "userId": 1,
+    "proposalId": 3
 }
+
+
+### Get Proposals User Has Voted On (userId=2)
+GET http://localhost:3001/api/votes/user/1
