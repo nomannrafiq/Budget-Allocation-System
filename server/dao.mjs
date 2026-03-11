@@ -337,3 +337,48 @@ export const updateVote = (userId, proposalId, score) => {
     });
   });
 };
+
+
+// ===== DELETE VOTE =====
+
+export const deleteVote = (userId, proposalId) => {
+  return new Promise((resolve, reject) => {
+    // Validate user exists
+    const userQuery = 'SELECT id FROM Users WHERE id = ?';
+    db.get(userQuery, [userId], (err, user) => {
+      if (err) {
+        console.error('Error checking user:', err.message);
+        return reject(new Error('Database error: ' + err.message));
+      }
+
+      if (!user) {
+        console.error('User not found:', userId);
+        return reject(new Error('No user with id ' + userId + ' exists'));
+      }
+
+      // Check if vote exists
+      const selectVote = 'SELECT * FROM Votes WHERE userId = ? AND proposalId = ?';
+      db.get(selectVote, [userId, proposalId], (err, row) => {
+        if (err) {
+          console.error('Error checking vote:', err.message);
+          return reject(new Error('Database error: ' + err.message));
+        }
+
+        if (!row) {
+          console.error('Vote not found');
+          return reject(new Error('No vote found for this user and proposal'));
+        }
+
+        // Delete vote
+        const deleteVoteQuery = 'DELETE FROM Votes WHERE userId = ? AND proposalId = ?';
+        db.run(deleteVoteQuery, [userId, proposalId], (err) => {
+          if (err) {
+            console.error('Error deleting vote:', err.message);
+            return reject(new Error('Database error: ' + err.message));
+          }
+          resolve({ message: 'Vote deleted successfully' });
+        });
+      });
+    });
+  });
+};

@@ -159,3 +159,22 @@ Content-Type: application/json
     "proposalId": 2,
     "score": 1
 }
+
+
+### Delete Vote (userId=2, proposalId=1)
+DELETE http://localhost:3001/api/votes
+Content-Type: application/json
+
+{
+    "userId": 2,
+    "proposalId": 2
+}
+
+### Try to Delete Already Deleted Vote (should return error)
+DELETE http://localhost:3001/api/votes
+Content-Type: application/json
+
+{
+    "userId": 2,
+    "proposalId": 1
+}

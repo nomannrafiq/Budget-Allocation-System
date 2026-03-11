@@ -1,5 +1,5 @@
 import express from 'express';
-import { castVote, updateVote } from '../dao.mjs';
+import { castVote, updateVote, deleteVote } from '../dao.mjs';
 
 const router = express.Router();
 
@@ -64,6 +64,33 @@ router.put('/', async (req, res) => {
     
     // Return the actual error for debugging
     res.status(500).json({ message: 'Internal server error', error: err.message });
+  }
+});
+
+// DELETE /api/votes - Delete vote
+router.delete('/', async (req, res) => {
+  const { userId, proposalId } = req.body;
+
+  // Validation
+  if (!userId || !proposalId) {
+    return res.status(400).json({ message: 'userId and proposalId are required' });
+  }
+
+  try {
+    const result = await deleteVote(userId, proposalId);
+    res.json(result);
+  } catch (err) {
+    console.error('Vote delete error:', err.message);
+    
+    if (err.message.includes('No user with id')) {
+      return res.status(404).json({ message: err.message });
+    }
+    
+    if (err.message.includes('No vote found')) {
+      return res.status(404).json({ message: err.message });
+    }
+    
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
