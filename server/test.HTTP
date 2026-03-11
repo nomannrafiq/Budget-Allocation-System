@@ -148,3 +148,14 @@ Content-Type: application/json
     "proposalId": 10,
     "score": 2
 }
+
+
+### Update Vote (userId=2, proposalId=2, change score to 1)
+PUT http://localhost:3001/api/votes
+Content-Type: application/json
+
+{
+    "userId": 2,
+    "proposalId": 2,
+    "score": 1
+}

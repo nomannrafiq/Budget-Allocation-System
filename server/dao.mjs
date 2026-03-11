@@ -290,3 +290,50 @@ export const castVote = (userId, proposalId, score) => {
     });
   });
 };
+
+
+
+
+// ===== UPDATE VOTE =====
+
+export const updateVote = (userId, proposalId, score) => {
+  return new Promise((resolve, reject) => {
+    // Validate user exists
+    const userQuery = 'SELECT id FROM Users WHERE id = ?';
+    db.get(userQuery, [userId], (err, user) => {
+      if (err) {
+        console.error('Error checking user:', err.message);
+        return reject(new Error('Database error: ' + err.message));
+      }
+
+      if (!user) {
+        console.error('User not found:', userId);
+        return reject(new Error('No user with id ' + userId + ' exists'));
+      }
+
+      // Check if vote exists
+      const selectVote = 'SELECT * FROM Votes WHERE userId = ? AND proposalId = ?';
+      db.get(selectVote, [userId, proposalId], (err, row) => {
+        if (err) {
+          console.error('Error checking vote:', err.message);
+          return reject(new Error('Database error: ' + err.message));
+        }
+
+        if (!row) {
+          console.error('Vote not found');
+          return reject(new Error('No vote found for this user and proposal'));
+        }
+
+        // Update vote
+        const updateVoteQuery = 'UPDATE Votes SET score = ? WHERE userId = ? AND proposalId = ?';
+        db.run(updateVoteQuery, [score, userId, proposalId], (err) => {
+          if (err) {
+            console.error('Error updating vote:', err.message);
+            return reject(new Error('Database error: ' + err.message));
+          }
+          resolve({ message: 'Vote updated successfully' });
+        });
+      });
+    });
+  });
+};

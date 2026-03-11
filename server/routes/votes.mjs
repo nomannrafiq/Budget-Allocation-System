@@ -1,5 +1,5 @@
 import express from 'express';
-import { castVote } from '../dao.mjs';
+import { castVote, updateVote } from '../dao.mjs';
 
 const router = express.Router();
 
@@ -32,6 +32,38 @@ router.post('/', async (req, res) => {
     }
     
     res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// PUT /api/votes - Update vote
+router.put('/', async (req, res) => {
+  const { userId, proposalId, score } = req.body;
+
+  // Validation
+  if (!userId || !proposalId || score === undefined) {
+    return res.status(400).json({ message: 'userId, proposalId, and score are required' });
+  }
+
+  if (isNaN(score) || score < 0 || score > 3) {
+    return res.status(400).json({ message: 'Score must be between 0 and 3' });
+  }
+
+  try {
+    const result = await updateVote(userId, proposalId, score);
+    res.json(result);
+  } catch (err) {
+    console.error('Vote update error:', err.message);
+    
+    if (err.message.includes('No user with id')) {
+      return res.status(404).json({ message: err.message });
+    }
+    
+    if (err.message.includes('No vote found')) {
+      return res.status(404).json({ message: err.message });
+    }
+    
+    // Return the actual error for debugging
+    res.status(500).json({ message: 'Internal server error', error: err.message });
   }
 });
 
