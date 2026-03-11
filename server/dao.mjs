@@ -147,4 +147,20 @@ export const getProposalById = (id) => {
   });
 };
 
+// ===== CREATE PROPOSAL =====
+
+export const createProposal = (userId, description, cost) => {
+  return new Promise((resolve, reject) => {
+    const query = 'INSERT INTO Proposals (userId, description, cost) VALUES (?, ?, ?)';
+    db.run(query, [userId, description, cost], function (err) {
+      if (err) {
+        console.error('Error creating proposal:', err.message);
+        reject(err);
+      } else {
+        resolve({ id: this.lastID, userId, description, cost });
+      }
+    });
+  });
+};
+
 

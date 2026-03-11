@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getAllProposals, getProposalById 
+  getAllProposals, getProposalById, createProposal 
   
 } from '../dao.mjs';
 
@@ -36,4 +36,31 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+// POST /api/proposals - Create new proposal
+router.post('/', async (req, res) => {
+  const { userId, description, cost } = req.body;
+
+  // Validation
+  if (!userId || !description || !cost) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  if (isNaN(cost) || cost <= 0) {
+    return res.status(400).json({ message: 'Cost must be a positive number' });
+  }
+
+  try {
+    const proposal = await createProposal(userId, description, cost);
+    res.status(201).json({ 
+      message: 'Proposal created successfully', 
+      proposal 
+    });
+  } catch (err) {
+    console.error('Error creating proposal:', err.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 export default router;
