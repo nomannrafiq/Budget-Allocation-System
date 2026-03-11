@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   getAllProposals, getProposalById, createProposal, updateProposal, deleteProposal,
-  getProposalsByUserId 
+  getProposalsByUserId, getProposalsForVoting 
   
 } from '../dao.mjs';
 
@@ -130,6 +130,20 @@ router.delete('/:id', async (req, res) => {
     res.json({ message: 'Proposal deleted successfully' });
   } catch (err) {
     console.error('Error deleting proposal:', err.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+//-------- VOTING ------------------
+
+// GET /api/proposals/voting/:userId - Get proposals for voting (not created by user)
+router.get('/voting/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const proposals = await getProposalsForVoting(userId);
+    res.json(proposals || []);
+  } catch (err) {
+    console.error('Error fetching proposals for voting:', err.message);
     res.status(500).json({ message: 'Internal server error' });
   }
 });

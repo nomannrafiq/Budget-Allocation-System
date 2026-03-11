@@ -210,6 +210,20 @@ export const deleteProposal = (id) => {
   });
 };
 
+// ===== GET PROPOSALS FOR VOTING =====
 
+export const getProposalsForVoting = (userId) => {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM Proposals WHERE userId != ?';
+    db.all(query, [userId], (err, rows) => {
+      if (err) {
+        console.error('Error fetching proposals for voting:', err.message);
+        reject(new Error('Database error: ' + err.message));
+      } else {
+        resolve(rows || []);
+      }
+    });
+  });
+};
 
 
