@@ -123,3 +123,28 @@ Content-Type: application/json
 
 ### Get Proposals for Voting (userId=2, excludes their own)
 GET http://localhost:3001/api/proposals/voting/2
+
+
+
+### ===== VOTING ENDPOINTS =====
+
+### Cast Vote (userId=2 votes on proposalId=2 with score=3)
+POST http://localhost:3001/api/votes
+Content-Type: application/json
+
+{
+    "userId": 2,
+    "proposalId": 2,
+    "score": 3
+}
+
+
+### Cast Vote with Invalid User (userId=999)
+POST http://localhost:3001/api/votes
+Content-Type: application/json
+
+{
+    "userId": 998,
+    "proposalId": 10,
+    "score": 2
+}

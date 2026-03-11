@@ -226,4 +226,67 @@ export const getProposalsForVoting = (userId) => {
   });
 };
 
+// ===== VOTE FUNCTIONS =====
 
+export const castVote = (userId, proposalId, score) => {
+  return new Promise((resolve, reject) => {
+    // Validate user exists
+    const userQuery = 'SELECT id FROM Users WHERE id = ?';
+    db.get(userQuery, [userId], (err, user) => {
+      if (err) {
+        console.error('Error checking user:', err.message);
+        return reject(new Error('Database error: ' + err.message));
+      }
+
+      if (!user) {
+        console.error('User not found:', userId);
+        return reject(new Error('No user with id ' + userId + ' exists'));
+      }
+
+      // Validate proposal exists
+      const proposalQuery = 'SELECT id FROM Proposals WHERE id = ?';
+      db.get(proposalQuery, [proposalId], (err, proposal) => {
+        if (err) {
+          console.error('Error checking proposal:', err.message);
+          return reject(new Error('Database error: ' + err.message));
+        }
+
+        if (!proposal) {
+          console.error('Proposal not found:', proposalId);
+          return reject(new Error('No proposal with id ' + proposalId + ' exists'));
+        }
+
+        // Check if vote already exists
+        const selectVote = 'SELECT * FROM Votes WHERE userId = ? AND proposalId = ?';
+        db.get(selectVote, [userId, proposalId], (err, row) => {
+          if (err) {
+            console.error('Error checking vote:', err.message);
+            return reject(new Error('Database error: ' + err.message));
+          }
+
+          if (row) {
+            // Update existing vote
+            const updateVote = 'UPDATE Votes SET score = ? WHERE userId = ? AND proposalId = ?';
+            db.run(updateVote, [score, userId, proposalId], (err) => {
+              if (err) {
+                console.error('Error updating vote:', err.message);
+                return reject(new Error('Database error: ' + err.message));
+              }
+              resolve({ message: 'Vote updated successfully' });
+            });
+          } else {
+            // Insert new vote
+            const insertVote = 'INSERT INTO Votes (score, userId, proposalId) VALUES (?, ?, ?)';
+            db.run(insertVote, [score, userId, proposalId], function (err) {
+              if (err) {
+                console.error('Error inserting vote:', err.message);
+                return reject(new Error('Database error: ' + err.message));
+              }
+              resolve({ message: 'Vote cast successfully', voteId: this.lastID });
+            });
+          }
+        });
+      });
+    });
+  });
+};

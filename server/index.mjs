@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import { db } from './db.mjs';
 import authRoutes from './routes/auth.mjs';
 import proposalRoutes from './routes/proposals.mjs';
+import votesRoutes from './routes/votes.mjs';
 
 
 const app = express();
@@ -25,6 +26,7 @@ app.get('/api/health', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/proposals', proposalRoutes);
+app.use('/api/votes', votesRoutes);
 
 
 // Start server
