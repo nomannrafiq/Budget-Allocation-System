@@ -133,4 +133,18 @@ export const getAllProposals = () => {
   });
 };
 
+export const getProposalById = (id) => {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM Proposals WHERE id = ?';
+    db.get(query, [id], (err, row) => {
+      if (err) {
+      console.error('Error fetching proposal:', err.message);
+        reject(err);
+      } else {
+        resolve(row);
+      }
+    });
+  });
+};
+
 

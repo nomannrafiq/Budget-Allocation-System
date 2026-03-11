@@ -60,3 +60,7 @@ Content-Type: application/json
 
 ### Get All Proposals
 GET http://localhost:3001/api/proposals
+
+
+### Get Proposal by ID (id=1)
+GET http://localhost:3001/api/proposals/1
