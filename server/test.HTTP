@@ -84,3 +84,12 @@ Content-Type: application/json
     "description": "Team building and training program",
     "cost": 3000
 }
+
+### Update Proposal (id=1)
+PUT http://localhost:3001/api/proposals/1
+Content-Type: application/json
+
+{
+    "description": "Upgrade office equipment with latest technology and software",
+    "cost": 6000
+}

@@ -163,4 +163,20 @@ export const createProposal = (userId, description, cost) => {
   });
 };
 
+// ===== UPDATE PROPOSAL =====
+
+export const updateProposal = (id, description, cost) => {
+  return new Promise((resolve, reject) => {
+    const query = 'UPDATE Proposals SET description = ?, cost = ? WHERE id = ?';
+    db.run(query, [description, cost, id], function (err) {
+      if (err) {
+        console.error('Error updating proposal:', err.message);
+        reject(err);
+      } else {
+        resolve({ id, description, cost });
+      }
+    });
+  });
+};
+
 

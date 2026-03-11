@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getAllProposals, getProposalById, createProposal 
+  getAllProposals, getProposalById, createProposal, updateProposal
   
 } from '../dao.mjs';
 
@@ -58,6 +58,39 @@ router.post('/', async (req, res) => {
     });
   } catch (err) {
     console.error('Error creating proposal:', err.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// PUT /api/proposals/:id - Update proposal
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { description, cost } = req.body;
+
+  // Validation
+  if (!description || !cost) {
+    return res.status(400).json({ message: 'Description and cost are required' });
+  }
+
+  if (isNaN(cost) || cost <= 0) {
+    return res.status(400).json({ message: 'Cost must be a positive number' });
+  }
+
+  try {
+    // Check if proposal exists
+    const proposal = await getProposalById(id);
+    if (!proposal) {
+      return res.status(404).json({ message: 'Proposal not found' });
+    }
+
+    // Update proposal
+    const updatedProposal = await updateProposal(id, description, cost);
+    res.json({ 
+      message: 'Proposal updated successfully', 
+      proposal: updatedProposal 
+    });
+  } catch (err) {
+    console.error('Error updating proposal:', err.message);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
