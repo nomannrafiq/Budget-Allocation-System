@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getAllProposals, getProposalById, createProposal, updateProposal
+  getAllProposals, getProposalById, createProposal, updateProposal, deleteProposal 
   
 } from '../dao.mjs';
 
@@ -95,5 +95,25 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+
+// DELETE /api/proposals/:id - Delete proposal
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Check if proposal exists
+    const proposal = await getProposalById(id);
+    if (!proposal) {
+      return res.status(404).json({ message: 'Proposal not found' });
+    }
+
+    // Delete proposal
+    await deleteProposal(id);
+    res.json({ message: 'Proposal deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting proposal:', err.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 export default router;

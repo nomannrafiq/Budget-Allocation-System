@@ -179,4 +179,19 @@ export const updateProposal = (id, description, cost) => {
   });
 };
 
+// ===== DELETE PROPOSAL =====
+
+export const deleteProposal = (id) => {
+  return new Promise((resolve, reject) => {
+    db.run('DELETE FROM Proposals WHERE id = ?', [id], function (err) {
+      if (err) {
+        console.error('Error deleting proposal:', err.message);
+        reject(err);
+      } else {
+        resolve({ id });
+      }
+    });
+  });
+};
+
 

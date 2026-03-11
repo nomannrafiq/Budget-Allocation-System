@@ -62,8 +62,8 @@ Content-Type: application/json
 GET http://localhost:3001/api/proposals
 
 
-### Get Proposal by ID (id=1)
-GET http://localhost:3001/api/proposals/1
+### Get Proposal by ID (id=2)
+GET http://localhost:3001/api/proposals/2
 
 ### Create Proposal (userId=2, member sameer)
 POST http://localhost:3001/api/proposals
@@ -93,3 +93,6 @@ Content-Type: application/json
     "description": "Upgrade office equipment with latest technology and software",
     "cost": 6000
 }
+
+### Delete Proposal (id=1)
+DELETE http://localhost:3001/api/proposals/2
