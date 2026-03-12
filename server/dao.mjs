@@ -434,3 +434,31 @@ export const getCurrentBudget = () => {
     });
   });
 };
+
+
+// ===== GET ACCEPTED PROPOSALS =====
+export const getAcceptedProposals = () => {
+  return new Promise((resolve, reject) => {
+    const query = `
+      SELECT 
+        p.id, 
+        p.userId, 
+        p.description, 
+        p.cost, 
+        ROUND(AVG(CAST(v.score AS FLOAT)), 2) as avg_score,
+        COUNT(v.id) as vote_count
+      FROM Proposals p
+      LEFT JOIN Votes v ON p.id = v.proposalId
+      GROUP BY p.id
+      ORDER BY avg_score DESC, vote_count DESC
+    `;
+    db.all(query, [], (err, rows) => {
+      if (err) {
+        console.error('Error fetching accepted proposals:', err.message);
+        reject(new Error('Database error: ' + err.message));
+      } else {
+        resolve(rows || []);
+      }
+    });
+  });
+};

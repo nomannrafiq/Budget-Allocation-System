@@ -198,3 +198,5 @@ Content-Type: application/json
 ### Get Current Budget
 GET http://localhost:3001/api/budget
 
+### Get Summary with Budget and Accepted Proposals
+GET http://localhost:3001/api/summary
