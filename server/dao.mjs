@@ -404,3 +404,33 @@ export const getScoredProposals = (userId) => {
     });
   });
 };
+
+// ===== BUDGET FUNCTIONS =====
+
+export const defineNewBudget = (amount) => {
+  return new Promise((resolve, reject) => {
+    const query = 'INSERT INTO Budgets (amount, phase) VALUES (?, 0)';
+    db.run(query, [amount], function (err) {
+      if (err) {
+        console.error('Error creating budget:', err.message);
+        reject(new Error('Database error: ' + err.message));
+      } else {
+        resolve({ id: this.lastID, amount: amount, phase: 0 });
+      }
+    });
+  });
+};
+
+export const getCurrentBudget = () => {
+  return new Promise((resolve, reject) => {
+    const query = 'SELECT * FROM Budgets ORDER BY id DESC LIMIT 1';
+    db.get(query, (err, row) => {
+      if (err) {
+        console.error('Error fetching budget:', err.message);
+        reject(new Error('Database error: ' + err.message));
+      } else {
+        resolve(row);
+      }
+    });
+  });
+};

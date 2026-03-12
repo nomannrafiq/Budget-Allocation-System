@@ -182,3 +182,19 @@ Content-Type: application/json
 
 ### Get Proposals User Has Voted On (userId=2)
 GET http://localhost:3001/api/votes/user/1
+
+
+
+### ===== SUMMARY ENDPOINTS =====
+
+### Set Budget (Admin only)
+POST http://localhost:3001/api/budget
+Content-Type: application/json
+
+{
+    "amount": 10000
+}
+
+### Get Current Budget
+GET http://localhost:3001/api/budget
+
