@@ -7,6 +7,7 @@ import proposalRoutes from './routes/proposals.mjs';
 import votesRoutes from './routes/votes.mjs';
 import budgetRoutes from './routes/budget.mjs';
 import summaryRoutes from './routes/summary.mjs';
+import phaseRoutes from './routes/phase.mjs';
 
 const app = express();
 const port = 3001;
@@ -30,7 +31,7 @@ app.use('/api/proposals', proposalRoutes);
 app.use('/api/votes', votesRoutes);
 app.use('/api/budget', budgetRoutes);
 app.use('/api/summary', summaryRoutes);
-
+app.use('/api/phase', phaseRoutes);
 
 
 

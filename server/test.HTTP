@@ -200,3 +200,9 @@ GET http://localhost:3001/api/budget
 
 ### Get Summary with Budget and Accepted Proposals
 GET http://localhost:3001/api/summary
+
+
+### ===== PHASE MANAGEMENT ENDPOINTS =====
+
+### Get Current Phase
+GET http://localhost:3001/api/phase/current

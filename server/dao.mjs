@@ -462,3 +462,39 @@ export const getAcceptedProposals = () => {
     });
   });
 };
+
+
+
+// ===== PHASE FUNCTIONS =====
+
+export const getCurrentPhase = () => {
+  return new Promise((resolve, reject) => {
+    db.get('SELECT current_phase FROM system_state WHERE id = 1', (err, row) => {
+      if (err) {
+        console.error('Error fetching current phase:', err.message);
+        reject(new Error('Database error: ' + err.message));
+      } else if (!row) {
+        reject(new Error('System state not initialized'));
+      } else {
+        resolve(row.current_phase);
+      }
+    });
+  });
+};
+
+export const updateCurrentPhase = (newPhase) => {
+  return new Promise((resolve, reject) => {
+    if (isNaN(newPhase) || newPhase < 0 || newPhase > 3) {
+      return reject(new Error('Phase must be between 0 and 3'));
+    }
+
+    db.run('UPDATE system_state SET current_phase = ? WHERE id = 1', [newPhase], function (err) {
+      if (err) {
+        console.error('Error updating phase:', err.message);
+        reject(new Error('Database error: ' + err.message));
+      } else {
+        resolve(newPhase);
+      }
+    });
+  });
+};
