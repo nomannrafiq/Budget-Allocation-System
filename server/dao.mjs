@@ -498,3 +498,36 @@ export const updateCurrentPhase = (newPhase) => {
     });
   });
 };
+
+
+// ===== RESTART SYSTEM =====
+
+export const restartToPhase0 = () => {
+  return new Promise((resolve, reject) => {
+    // Update phase to 0
+    db.run('UPDATE system_state SET current_phase = 0 WHERE id = 1', (err) => {
+      if (err) {
+        console.error('Error resetting phase:', err.message);
+        return reject(new Error('Database error: ' + err.message));
+      }
+
+      // Delete all votes
+      db.run('DELETE FROM Votes', (err) => {
+        if (err) {
+          console.error('Error deleting votes:', err.message);
+          return reject(new Error('Database error: ' + err.message));
+        }
+
+        // Delete all proposals
+        db.run('DELETE FROM Proposals', (err) => {
+          if (err) {
+            console.error('Error deleting proposals:', err.message);
+            return reject(new Error('Database error: ' + err.message));
+          }
+
+          resolve({ message: 'System restarted to Phase 0', phase: 0 });
+        });
+      });
+    });
+  });
+};

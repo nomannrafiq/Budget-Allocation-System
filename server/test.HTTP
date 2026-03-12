@@ -241,3 +241,11 @@ Content-Type: application/json
 {
     "phase": 5
 }
+
+#-----------------------------
+
+### Restart System (Clear all proposals and votes, back to Phase 0)
+POST http://localhost:3001/api/phase/restart
+Content-Type: application/json
+
+{}
