@@ -206,3 +206,38 @@ GET http://localhost:3001/api/summary
 
 ### Get Current Phase
 GET http://localhost:3001/api/phase/current
+
+### Transition to Phase 1 (PROPOSAL)
+POST http://localhost:3001/api/phase/transition
+Content-Type: application/json
+
+{
+    "phase": 1
+}
+
+### Transition to Phase 2 (VOTING)
+POST http://localhost:3001/api/phase/transition
+Content-Type: application/json
+
+{
+    "phase": 2
+}
+
+### Transition to Phase 3 (SUMMARY)
+POST http://localhost:3001/api/phase/transition
+Content-Type: application/json
+
+{
+    "phase": 3
+}
+
+### Get Current Phase (should be 3)
+GET http://localhost:3001/api/phase/current
+
+### Try Invalid Phase (should return error)
+POST http://localhost:3001/api/phase/transition
+Content-Type: application/json
+
+{
+    "phase": 5
+}
