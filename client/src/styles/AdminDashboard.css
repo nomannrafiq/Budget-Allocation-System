@@ -1,62 +1,101 @@
-.admin-dashboard {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
+.section {
+  background: #0f3460;
+  border: 1px solid #533483;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 30px;
 }
 
-.admin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 60px;
-  background: rgba(0, 0, 0, 0.3);
-  border-bottom: 2px solid #533483;
-  flex-shrink: 0;
-}
-
-.header-left {
-  flex: 0 0 auto;
-}
-
-.header-left h1 {
-  font-size: 28px;
-  margin: 0;
+.section h2 {
   color: #00d4ff;
-  margin-bottom: 5px;
-  font-weight: 700;
+  margin: 0 0 10px 0;
+  font-size: 22px;
 }
 
-.welcome-text {
-  margin: 0;
+.section-desc {
   color: #a0a0a0;
-  font-size: 13px;
+  margin: 0 0 25px 0;
+  font-size: 14px;
 }
 
-.logout-btn {
-  padding: 12px 40px;
-  background: #ff4444;
-  color: white;
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #00d4ff;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  background: #1a1a2e;
+  border: 1px solid #533483;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #00d4ff;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.section button {
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  color: #000;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 700;
-  transition: background 0.3s;
-  font-size: 14px;
-  white-space: nowrap;
-  flex: 1;
-  max-width: 400px;
+  transition: all 0.3s;
+  margin-top: 20px;
+}
+
+.section button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+}
+
+.section button:disabled {
+  background: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.current-info {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(0, 212, 255, 0.1);
+  border-left: 4px solid #00d4ff;
+  border-radius: 6px;
+}
+
+.current-info p {
   margin: 0;
+  color: #a0a0a0;
 }
 
-.logout-btn:hover {
-  background: #cc0000;
+.error-message {
+  background-color: #2a1a1a;
+  color: #ff6b6b;
+  padding: 15px;
+  border-radius: 6px;
+  margin: 0 60px 20px 60px;
+  border-left: 4px solid #ff6b6b;
 }
 
-.admin-content {
-  flex: 1;
-  width: 100%;
-  padding: 40px 60px;
-  overflow-y: auto;
+.success-message {
+  background-color: #1a2a1a;
+  color: #6bff6b;
+  padding: 15px;
+  border-radius: 6px;
+  margin: 0 60px 20px 60px;
+  border-left: 4px solid #6bff6b;
 }
