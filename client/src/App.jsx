@@ -4,9 +4,10 @@ import { AppContext } from './context/AppContext'
 import './App.css'
 
 import Login from './components/Login'
+import AdminDashboard from './components/AdminDashboard'
 
 function App() {
-  const { isLoggedIn, loading } = useContext(AppContext)
+  const { isLoggedIn, loading, user } = useContext(AppContext)
 
   if (loading) {
     return <div className="loading">Loading...</div>
@@ -15,7 +16,22 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={!isLoggedIn ? <Login /> : <Navigate to="/" />} />
-      <Route path="/" element={isLoggedIn ? <div className="welcome"><h1>Welcome!</h1></div> : <Navigate to="/login" />} />
+      
+      <Route 
+        path="/admindashboard" 
+        element={isLoggedIn && user?.role === 'admin' ? <AdminDashboard /> : <Navigate to="/login" />} 
+      />
+      
+      <Route 
+        path="/" 
+        element={isLoggedIn ? (
+          user?.role === 'admin' ? 
+            <Navigate to="/admindashboard" /> : 
+            <div className="welcome"><h1>Member Dashboard Coming Soon</h1></div>
+        ) : (
+          <Navigate to="/login" />
+        )} 
+      />
     </Routes>
   )
 }
