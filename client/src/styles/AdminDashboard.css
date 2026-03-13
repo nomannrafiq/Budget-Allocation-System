@@ -246,3 +246,31 @@
   font-weight: 700;
   margin-top: auto;
 }
+
+.restart-section {
+  background: rgba(255, 68, 68, 0.1);
+  border-color: #ff4444;
+}
+
+.restart-section h2 {
+  color: #ff4444;
+}
+
+.restart-btn {
+  background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%) !important;
+  color: white !important;
+  width: auto;
+  padding: 12px 30px !important;
+  margin-top: 20px !important;
+}
+
+.restart-btn:hover:not(:disabled) {
+  box-shadow: 0 5px 20px rgba(255, 68, 68, 0.4) !important;
+}
+
+.warning {
+  color: #ff9999;
+  font-size: 13px;
+  margin-top: 15px;
+  font-style: italic;
+}

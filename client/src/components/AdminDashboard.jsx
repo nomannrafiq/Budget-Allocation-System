@@ -108,6 +108,39 @@ function AdminDashboard() {
     }
   }
 
+  const handleRestartSystem = async () => {
+    if (!window.confirm('Are you sure? This will delete all proposals and votes!')) {
+      return
+    }
+
+    setError('')
+    setSuccess('')
+    setLoading(true)
+
+    try {
+      const response = await fetch('http://localhost:3001/api/phase/restart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setCurrentPhase(0)
+        setSuccess('System restarted successfully!')
+        setTimeout(() => setSuccess(''), 3000)
+      } else {
+        setError(data.message || 'Failed to restart system')
+      }
+    } catch (err) {
+      setError('Connection error')
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleLogout = () => {
     logout()
     navigate('/login')
@@ -196,6 +229,21 @@ function AdminDashboard() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* System Control Section */}
+        <div className="section restart-section">
+          <h2>System Control</h2>
+          <p className="section-desc">Dangerous operations - handle with care</p>
+          
+          <button 
+            className="restart-btn" 
+            onClick={handleRestartSystem}
+            disabled={loading}
+          >
+            🔄 RESTART SYSTEM
+          </button>
+          <p className="warning">Warning: This will delete all proposals and votes, and reset to Phase 0</p>
         </div>
 
       </div>
