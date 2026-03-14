@@ -36,9 +36,9 @@
 
 .logout-btn {
   padding: 12px 40px;
-  background: #ff4444;
-  color: white;
-  border: none;
+  background: #ff4444 !important;
+  color: white !important;
+  border: none !important;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 700;
@@ -47,11 +47,11 @@
   white-space: nowrap;
   flex: 1;
   max-width: 400px;
-  margin: 0;
+  margin: 0 !important;
 }
 
 .logout-btn:hover {
-  background: #cc0000;
+  background: #cc0000 !important;
 }
 
 .admin-content {
@@ -143,24 +143,6 @@
 .current-info p {
   margin: 0;
   color: #a0a0a0;
-}
-
-.error-message {
-  background-color: #2a1a1a;
-  color: #ff6b6b;
-  padding: 15px;
-  border-radius: 6px;
-  margin: 0 60px 20px 60px;
-  border-left: 4px solid #ff6b6b;
-}
-
-.success-message {
-  background-color: #1a2a1a;
-  color: #6bff6b;
-  padding: 15px;
-  border-radius: 6px;
-  margin: 0 60px 20px 60px;
-  border-left: 4px solid #6bff6b;
 }
 
 .current-phase {
@@ -273,4 +255,245 @@
   font-size: 13px;
   margin-top: 15px;
   font-style: italic;
+}
+
+.error-message {
+  background-color: #2a1a1a;
+  color: #ff6b6b;
+  padding: 15px;
+  border-radius: 6px;
+  margin: 0 60px 20px 60px;
+  border-left: 4px solid #ff6b6b;
+}
+
+.success-message {
+  background-color: #1a2a1a;
+  color: #6bff6b;
+  padding: 15px;
+  border-radius: 6px;
+  margin: 0 60px 20px 60px;
+  border-left: 4px solid #6bff6b;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablet/Large Devices - 1024px and below */
+@media (max-width: 1024px) {
+  .admin-header {
+    padding: 20px 40px;
+  }
+
+  .admin-content {
+    padding: 30px 40px;
+  }
+
+  .error-message,
+  .success-message {
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+  .section {
+    padding: 25px;
+  }
+
+  .phase-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+/* Tablets/Small Devices - 768px and below */
+@media (max-width: 768px) {
+  .admin-header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px;
+    text-align: center;
+  }
+
+  .header-left h1 {
+    font-size: 22px;
+  }
+
+  .logout-btn {
+    flex: 1;
+    max-width: 100%;
+  }
+
+  .admin-content {
+    padding: 20px;
+  }
+
+  .section {
+    padding: 20px;
+  }
+
+  .form-group input {
+    max-width: 100%;
+  }
+
+  .phase-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .phase-card {
+    min-height: 240px;
+    padding: 15px;
+  }
+
+  .phase-card h3 {
+    font-size: 18px;
+  }
+
+  .phase-name {
+    font-size: 14px;
+  }
+
+  .phase-desc {
+    font-size: 12px;
+  }
+
+  .error-message,
+  .success-message {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .section h2 {
+    font-size: 18px;
+  }
+
+  .current-phase {
+    padding: 15px;
+  }
+
+  .current-phase p {
+    font-size: 16px;
+  }
+}
+
+/* Mobile Phones - 480px and below */
+@media (max-width: 480px) {
+  .admin-header {
+    padding: 12px 15px;
+  }
+
+  .header-left h1 {
+    font-size: 18px;
+    margin-bottom: 3px;
+  }
+
+  .welcome-text {
+    font-size: 12px;
+  }
+
+  .admin-content {
+    padding: 15px;
+  }
+
+  .section {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  .section h2 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .section-desc {
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+
+  .phase-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .phase-card {
+    min-height: 200px;
+    padding: 12px;
+  }
+
+  .phase-card h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .phase-name {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+
+  .phase-desc {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  .phase-btn,
+  .section button {
+    padding: 10px 20px;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+
+  .phase-active {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .logout-btn {
+    padding: 10px 20px;
+    font-size: 12px;
+  }
+
+  .form-group input {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .error-message,
+  .success-message {
+    padding: 12px;
+    margin: 0 0 15px 0;
+    font-size: 13px;
+  }
+
+  .warning {
+    font-size: 11px;
+  }
+
+  .current-info {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .current-phase {
+    padding: 12px;
+  }
+
+  .current-phase p {
+    font-size: 14px;
+  }
+}
+
+/* Small Phones - 320px and below */
+@media (max-width: 320px) {
+  .admin-header {
+    padding: 10px 10px;
+  }
+
+  .header-left h1 {
+    font-size: 16px;
+  }
+
+  .section {
+    padding: 12px;
+  }
+
+  .phase-card {
+    min-height: 180px;
+  }
 }
