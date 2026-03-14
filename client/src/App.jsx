@@ -5,6 +5,7 @@ import './App.css'
 
 import Login from './components/Login'
 import AdminDashboard from './components/AdminDashboard'
+import MemberDashboard from './components/MemberDashboard'
 
 function App() {
   const { isLoggedIn, loading, user } = useContext(AppContext)
@@ -21,13 +22,18 @@ function App() {
         path="/admindashboard" 
         element={isLoggedIn && user?.role === 'admin' ? <AdminDashboard /> : <Navigate to="/login" />} 
       />
+
+      <Route 
+        path="/memberdashboard" 
+        element={isLoggedIn && user?.role === 'member' ? <MemberDashboard /> : <Navigate to="/login" />} 
+      />
       
       <Route 
         path="/" 
         element={isLoggedIn ? (
           user?.role === 'admin' ? 
             <Navigate to="/admindashboard" /> : 
-            <div className="welcome"><h1>Member Dashboard Coming Soon</h1></div>
+            <Navigate to="/memberdashboard" />
         ) : (
           <Navigate to="/login" />
         )} 
