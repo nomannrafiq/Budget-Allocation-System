@@ -24,6 +24,8 @@ function MemberDashboard() {
   const [loadingVoting, setLoadingVoting] = useState(false)
   const [userVotes, setUserVotes] = useState({})
   const [votingInProgress, setVotingInProgress] = useState(null)
+  const [summary, setSummary] = useState(null)
+  const [loadingSummary, setLoadingSummary] = useState(false)
 
   // Fetch current phase and proposals on mount
   useEffect(() => {
@@ -35,6 +37,13 @@ function MemberDashboard() {
   useEffect(() => {
     if (currentPhase === 2) {
       fetchVotingProposals()
+    }
+  }, [currentPhase])
+
+  // Fetch summary when Phase 3
+  useEffect(() => {
+    if (currentPhase === 3) {
+      fetchSummary()
     }
   }, [currentPhase])
 
@@ -79,6 +88,25 @@ function MemberDashboard() {
       console.error('Error fetching voting proposals:', err)
     } finally {
       setLoadingVoting(false)
+    }
+  }
+
+  const fetchSummary = async () => {
+    setLoadingSummary(true)
+    try {
+      const response = await fetch('http://localhost:3001/api/summary')
+      if (response.ok) {
+        const data = await response.json()
+        setSummary(data)
+      } else {
+        console.error('Summary fetch failed:', response.status)
+        setError('Failed to load summary')
+      }
+    } catch (err) {
+      console.error('Summary fetch error:', err)
+      setError('Connection error while loading summary')
+    } finally {
+      setLoadingSummary(false)
     }
   }
 
@@ -324,11 +352,48 @@ function MemberDashboard() {
 
         {/* Phase 3: View Summary */}
         {currentPhase === 3 && (
-          <div className="section">
-            <h2>Budget Summary & Results</h2>
-            <p className="section-desc">See the results of voting</p>
-            {}
-          </div>
+          <>
+            {/* Budget Summary Section */}
+            <div className="section">
+              <h2>💰 Budget Summary</h2>
+              <p className="section-desc">Overview of total budget allocation</p>
+
+              {loadingSummary ? (
+                <div className="loading-text">Loading budget summary...</div>
+              ) : summary ? (
+                <>
+                  <div className="summary-cards">
+                    <div className="summary-card">
+                      <div className="summary-label">Total Budget</div>
+                      <div className="summary-value">${summary.budget.total.toLocaleString()}</div>
+                    </div>
+                    <div className="summary-card">
+                      <div className="summary-label">Amount Allocated</div>
+                      <div className="summary-value accent-green">${summary.budget.spent.toLocaleString()}</div>
+                    </div>
+                    <div className="summary-card">
+                      <div className="summary-label">Remaining Budget</div>
+                      <div className="summary-value accent-cyan">${summary.budget.remaining.toLocaleString()}</div>
+                    </div>
+                  </div>
+
+                  <div className="progress-bar">
+                    <div 
+                      className="progress-fill"
+                      style={{ width: `${(summary.budget.spent / summary.budget.total) * 100}%` }}
+                    ></div>
+                    <div className="progress-text">
+                      {Math.round((summary.budget.spent / summary.budget.total) * 100)}% Allocated
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="empty-state">
+                  <p>No budget data available</p>
+                </div>
+              )}
+            </div>
+          </>
         )}
 
         {/* Phase 0: Waiting Message */}
