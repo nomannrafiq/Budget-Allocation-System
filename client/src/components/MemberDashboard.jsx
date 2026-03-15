@@ -18,10 +18,13 @@ function MemberDashboard() {
   })
   const [proposalDescription, setProposalDescription] = useState('')
   const [proposalCost, setProposalCost] = useState('')
+  const [allProposals, setAllProposals] = useState([])
+  const [loadingProposals, setLoadingProposals] = useState(false)
 
-  // Fetch current phase on mount
+  // Fetch current phase and proposals on mount
   useEffect(() => {
     fetchCurrentPhase()
+    fetchAllProposals()
   }, [])
 
   const fetchCurrentPhase = async () => {
@@ -33,6 +36,21 @@ function MemberDashboard() {
       }
     } catch (err) {
       console.error('Error fetching phase:', err)
+    }
+  }
+
+  const fetchAllProposals = async () => {
+    setLoadingProposals(true)
+    try {
+      const response = await fetch('http://localhost:3001/api/proposals')
+      if (response.ok) {
+        const data = await response.json()
+        setAllProposals(data)
+      }
+    } catch (err) {
+      console.error('Error fetching proposals:', err)
+    } finally {
+      setLoadingProposals(false)
     }
   }
 
@@ -71,6 +89,7 @@ function MemberDashboard() {
         setSuccess('Proposal created successfully!')
         setProposalDescription('')
         setProposalCost('')
+        fetchAllProposals()
         setTimeout(() => setSuccess(''), 3000)
       } else {
         setError(data.message || 'Failed to create proposal')
@@ -148,14 +167,43 @@ function MemberDashboard() {
           </div>
         )}
 
+        {/* All Proposals Display (Phases 1, 2, 3) */}
+        {(currentPhase === 1 || currentPhase === 2 || currentPhase === 3) && (
+          <div className="section">
+            <h2>All Proposals</h2>
+            <p className="section-desc">View all team proposals</p>
+
+            {loadingProposals ? (
+              <div className="loading-text">Loading proposals...</div>
+            ) : allProposals.length === 0 ? (
+              <div className="empty-state">
+                <p>No proposals yet</p>
+              </div>
+            ) : (
+              <div className="proposals-grid">
+                {allProposals.map((proposal) => (
+                  <div key={proposal.id} className="proposal-card">
+                    <div className="proposal-header">
+                      <h3>Proposal #{proposal.id}</h3>
+                      <span className="proposal-cost">${proposal.cost.toLocaleString()}</span>
+                    </div>
+                    <p className="proposal-description">{proposal.description}</p>
+                    <div className="proposal-meta">
+                      <span className="proposal-by">By: User {proposal.userId}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Phase 2: Vote on Proposals */}
         {currentPhase === 2 && (
           <div className="section">
             <h2>Vote on Proposals</h2>
             <p className="section-desc">Cast your vote on team proposals</p>
-            {
-
-            }
+            {}
           </div>
         )}
 
@@ -164,9 +212,7 @@ function MemberDashboard() {
           <div className="section">
             <h2>Budget Summary & Results</h2>
             <p className="section-desc">See the results of voting</p>
-            {
-              
-            }
+            {}
           </div>
         )}
 
