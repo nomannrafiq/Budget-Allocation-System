@@ -416,6 +416,56 @@ function MemberDashboard() {
                 </div>
               </div>
             )}
+
+            {/* Accepted Proposals Section */}
+            <div className="section">
+              <h2>✅ Accepted Proposals</h2>
+              <p className="section-desc">Proposals with score ≥ 2.0 (ranked by voting score)</p>
+
+              {loadingSummary ? (
+                <div className="loading-text">Loading accepted proposals...</div>
+              ) : summary && summary.proposals.length > 0 ? (
+                <>
+                  {summary.proposals.filter(p => (p.avg_score || 0) >= 2).length > 0 ? (
+                    <div className="results-table">
+                      <div className="table-header">
+                        <div className="col-rank">Rank</div>
+                        <div className="col-proposal">Proposal</div>
+                        <div className="col-score">Avg Score</div>
+                        <div className="col-cost">Cost</div>
+                      </div>
+                      {summary.proposals
+                        .filter(p => (p.avg_score || 0) >= 2)
+                        .map((proposal, index) => {
+                          const avgScore = proposal.avg_score || 0
+                          return (
+                            <div key={proposal.id} className="table-row accepted">
+                              <div className="col-rank">#{index + 1}</div>
+                              <div className="col-proposal">
+                                <div className="proposal-title">Proposal #{proposal.id}</div>
+                                <div className="proposal-description-small">{proposal.description}</div>
+                              </div>
+                              <div className="col-score">
+                                <span className="score-badge">{avgScore.toFixed(1)}</span>
+                                <span className="score-votes">({proposal.vote_count} votes)</span>
+                              </div>
+                              <div className="col-cost">${proposal.cost.toLocaleString()}</div>
+                            </div>
+                          )
+                        })}
+                    </div>
+                  ) : (
+                    <div className="empty-state">
+                      <p>No proposals met the acceptance criteria</p>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="empty-state">
+                  <p>No proposals available</p>
+                </div>
+              )}
+            </div>
           </>
         )}
 

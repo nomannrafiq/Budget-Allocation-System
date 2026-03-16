@@ -499,3 +499,101 @@
 .stat-value.accent-red {
   color: #ff6b6b;
 }
+
+/* ===== RESULTS TABLE ===== */
+
+.results-table {
+  margin-top: 20px;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 60px 1fr 120px 100px;
+  gap: 15px;
+  padding: 15px;
+  background: #0f3460;
+  border-radius: 6px 6px 0 0;
+  border-bottom: 2px solid #533483;
+  font-weight: 700;
+  color: #00d4ff;
+  font-size: 12px;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 120px 100px;
+  gap: 15px;
+  padding: 15px;
+  border-bottom: 1px solid #533483;
+  align-items: center;
+  background: #1a1a2e;
+}
+
+.table-row:hover {
+  background: #0f3460;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+  border-radius: 0 0 6px 6px;
+}
+
+.col-rank {
+  color: #a0a0a0;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.col-proposal {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.proposal-title {
+  color: #00d4ff;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.proposal-description-small {
+  color: #a0a0a0;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.col-score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.score-badge {
+  background: #0f3460;
+  color: #00d4ff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.score-votes {
+  color: #a0a0a0;
+  font-size: 11px;
+}
+
+.col-cost {
+  color: #6bff6b;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ===== ACCEPTED PROPOSALS TABLE ===== */
+
+.table-row.accepted {
+  border-left: 4px solid #6bff6b;
+}
+
+.table-row.accepted:hover {
+  background: rgba(107, 255, 107, 0.05);
+}
