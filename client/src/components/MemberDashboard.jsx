@@ -516,6 +516,53 @@ function MemberDashboard() {
                 </div>
               )}
             </div>
+
+            {/* All Proposals Summary Section */}
+            <div className="section">
+              <h2>📋 All Proposals Summary</h2>
+              <p className="section-desc">Complete list of all proposals with voting results</p>
+
+              {loadingSummary ? (
+                <div className="loading-text">Loading all proposals...</div>
+              ) : summary && summary.proposals.length > 0 ? (
+                <div className="results-table">
+                  <div className="table-header all-proposals-header">
+                    <div className="col-rank">Rank</div>
+                    <div className="col-proposal">Proposal</div>
+                    <div className="col-score">Avg Score</div>
+                    <div className="col-cost">Cost</div>
+                    <div className="col-status">Status</div>
+                  </div>
+                  {summary.proposals.map((proposal, index) => {
+                    const avgScore = proposal.avg_score || 0
+                    const isAccepted = avgScore >= 2
+                    return (
+                      <div key={proposal.id} className="table-row">
+                        <div className="col-rank">#{index + 1}</div>
+                        <div className="col-proposal">
+                          <div className="proposal-title">Proposal #{proposal.id}</div>
+                          <div className="proposal-description-small">{proposal.description}</div>
+                        </div>
+                        <div className="col-score">
+                          <span className="score-badge">{avgScore.toFixed(1)}</span>
+                          <span className="score-votes">({proposal.vote_count} votes)</span>
+                        </div>
+                        <div className="col-cost">${proposal.cost.toLocaleString()}</div>
+                        <div className="col-status">
+                          <span className={`status-badge ${isAccepted ? 'accepted' : 'rejected'}`}>
+                            {isAccepted ? '✓ Accepted' : '✗ Rejected'}
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                <div className="empty-state">
+                  <p>No proposals available</p>
+                </div>
+              )}
+            </div>
           </>
         )}
 

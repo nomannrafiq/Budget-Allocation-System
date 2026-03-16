@@ -193,6 +193,8 @@
   border-left: 4px solid #6bff6b;
 }
 
+/* ===== PROPOSAL CARDS ===== */
+
 .proposals-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -273,6 +275,8 @@
   margin: 0;
   font-size: 14px;
 }
+
+/* ===== VOTING CARDS ===== */
 
 .voting-grid {
   display: grid;
@@ -388,7 +392,7 @@
   font-weight: 600;
 }
 
-/* ===== SUMMARY PAGE STYLES ===== */
+/* ===== BUDGET SUMMARY SECTION ===== */
 
 .summary-cards {
   display: grid;
@@ -519,6 +523,10 @@
   font-size: 12px;
 }
 
+.table-header.all-proposals-header {
+  grid-template-columns: 60px 1fr 120px 100px 120px;
+}
+
 .table-row {
   display: grid;
   grid-template-columns: 60px 1fr 120px 100px;
@@ -527,6 +535,10 @@
   border-bottom: 1px solid #533483;
   align-items: center;
   background: #1a1a2e;
+}
+
+.results-table:has(.all-proposals-header) .table-row {
+  grid-template-columns: 60px 1fr 120px 100px 120px;
 }
 
 .table-row:hover {
@@ -586,6 +598,30 @@
   color: #6bff6b;
   font-weight: 600;
   font-size: 13px;
+}
+
+.col-status {
+  text-align: center;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.accepted {
+  background: rgba(107, 255, 107, 0.1);
+  color: #6bff6b;
+  border: 1px solid #6bff6b;
+}
+
+.status-badge.rejected {
+  background: rgba(255, 107, 107, 0.1);
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
 }
 
 /* ===== ACCEPTED PROPOSALS TABLE ===== */
