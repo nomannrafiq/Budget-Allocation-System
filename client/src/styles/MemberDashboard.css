@@ -597,3 +597,13 @@
 .table-row.accepted:hover {
   background: rgba(107, 255, 107, 0.05);
 }
+
+/* ===== REJECTED PROPOSALS TABLE ===== */
+
+.table-row.rejected {
+  border-left: 4px solid #ff6b6b;
+}
+
+.table-row.rejected:hover {
+  background: rgba(255, 107, 107, 0.05);
+}
