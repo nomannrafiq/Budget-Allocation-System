@@ -393,6 +393,29 @@ function MemberDashboard() {
                 </div>
               )}
             </div>
+
+            {/* Summary Statistics Section */}
+            {summary && (
+              <div className="section">
+                <h2>📊 Statistics</h2>
+                <p className="section-desc">Voting results overview</p>
+
+                <div className="stats-grid">
+                  <div className="stat-card">
+                    <div className="stat-label">Total Proposals</div>
+                    <div className="stat-value">{summary.summary.total_proposals}</div>
+                  </div>
+                  <div className="stat-card">
+                    <div className="stat-label">Accepted</div>
+                    <div className="stat-value accent-green">{summary.summary.accepted}</div>
+                  </div>
+                  <div className="stat-card">
+                    <div className="stat-label">Rejected</div>
+                    <div className="stat-value accent-red">{summary.summary.rejected}</div>
+                  </div>
+                </div>
+              </div>
+            )}
           </>
         )}
 
