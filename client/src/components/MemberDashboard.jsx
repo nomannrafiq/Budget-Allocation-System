@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 import Phase0Dashboard from './Phase0Dashboard'
+import Phase1Dashboard from './Phase1Dashboard'
 import '../styles/MemberDashboard.css'
 
 function MemberDashboard() {
@@ -111,54 +112,6 @@ function MemberDashboard() {
     }
   }
 
-  const handleCreateProposal = async (e) => {
-    e.preventDefault()
-    setError('')
-    setSuccess('')
-    setLoading(true)
-
-    if (!proposalDescription || !proposalCost) {
-      setError('Please fill in all fields')
-      setLoading(false)
-      return
-    }
-
-    if (proposalCost <= 0) {
-      setError('Cost must be greater than 0')
-      setLoading(false)
-      return
-    }
-
-    try {
-      const response = await fetch('http://localhost:3001/api/proposals', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user.id,
-          description: proposalDescription,
-          cost: parseFloat(proposalCost)
-        })
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        setSuccess('Proposal created successfully!')
-        setProposalDescription('')
-        setProposalCost('')
-        fetchAllProposals()
-        setTimeout(() => setSuccess(''), 3000)
-      } else {
-        setError(data.message || 'Failed to create proposal')
-      }
-    } catch (err) {
-      setError('Connection error')
-      console.error(err)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const handleCastVote = async (proposalId, score) => {
     setError('')
     setSuccess('')
@@ -230,43 +183,16 @@ function MemberDashboard() {
 
         {/* Phase 1: Create Proposals */}
         {currentPhase === 1 && (
-          <div className="section">
-            <h2>Create Proposal</h2>
-            <p className="section-desc">Submit your budget allocation idea</p>
-            
-            <form onSubmit={handleCreateProposal}>
-              <div className="form-group">
-                <label>Proposal Description</label>
-                <textarea
-                  value={proposalDescription}
-                  onChange={(e) => setProposalDescription(e.target.value)}
-                  placeholder="Describe your proposal in detail"
-                  disabled={loading}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Estimated Cost ($)</label>
-                <input
-                  type="number"
-                  value={proposalCost}
-                  onChange={(e) => setProposalCost(e.target.value)}
-                  placeholder="Enter cost amount"
-                  disabled={loading}
-                  min="0"
-                  step="100"
-                />
-              </div>
-
-              <button type="submit" disabled={loading}>
-                {loading ? 'Creating...' : 'CREATE PROPOSAL'}
-              </button>
-            </form>
-          </div>
+          <Phase1Dashboard 
+            currentPhase={currentPhase}
+            allProposals={allProposals}
+            loadingProposals={loadingProposals}
+            onProposalCreated={fetchAllProposals}
+          />
         )}
 
-        {/* All Proposals Display (Phases 1, 2, 3) */}
-        {(currentPhase === 1 || currentPhase === 2 || currentPhase === 3) && (
+        {/* All Proposals Display (Phases 2, 3) */}
+        {(currentPhase === 2 || currentPhase === 3) && (
           <div className="section">
             <h2>All Proposals</h2>
             <p className="section-desc">View all team proposals</p>
