@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
+import Phase0Dashboard from './Phase0Dashboard'
 import '../styles/MemberDashboard.css'
 
 function MemberDashboard() {
@@ -221,6 +222,11 @@ function MemberDashboard() {
         <div className="phase-info">
           <p>Current Phase: <span className="phase-badge">{currentPhase} - {phaseNames[currentPhase]}</span></p>
         </div>
+
+        {/* Phase 0: Waiting Message */}
+        {currentPhase === 0 && (
+          <Phase0Dashboard />
+        )}
 
         {/* Phase 1: Create Proposals */}
         {currentPhase === 1 && (
@@ -564,14 +570,6 @@ function MemberDashboard() {
               )}
             </div>
           </>
-        )}
-
-        {/* Phase 0: Waiting Message */}
-        {currentPhase === 0 && (
-          <div className="section waiting-section">
-            <h2>Waiting for Admin</h2>
-            <p className="section-desc">Admin is setting up the budget. Please wait...</p>
-          </div>
         )}
 
       </div>
