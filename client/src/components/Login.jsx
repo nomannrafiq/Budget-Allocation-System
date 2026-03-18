@@ -78,6 +78,18 @@ function Login() {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
+        
+
+        <p className="signup-link">
+          Don't have an account? 
+          <button 
+            type="button"
+            onClick={() => navigate('/signup')}
+            className="link-btn"
+          >
+            Sign up here
+          </button>
+        </p>
 
         <div className="test-credentials">
           <h4>Test Credentials:</h4>

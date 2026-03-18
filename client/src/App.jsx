@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import { AppContext } from './context/AppContext'
 import './App.css'
 
+import Signup from './components/Signup'
 import Login from './components/Login'
 import AdminDashboard from './components/AdminDashboard'
 import MemberDashboard from './components/MemberDashboard'
@@ -17,6 +18,8 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={!isLoggedIn ? <Login /> : <Navigate to="/" />} />
+      <Route path="/signup" element={!isLoggedIn ? <Signup /> : <Navigate to="/" />} />
+
       
       <Route 
         path="/admindashboard" 

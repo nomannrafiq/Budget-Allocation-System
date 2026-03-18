@@ -126,3 +126,27 @@ button:disabled {
   color: #00d4ff;
   font-weight: 600;
 }
+
+.signup-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #888;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: #00d4ff;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+  margin-left: 5px;
+  padding: 0;
+  font-weight: bold;
+}
+
+.link-btn:hover {
+  color: #00ffff;
+  text-decoration: none;
+}
