@@ -1,3 +1,5 @@
+[![e2e](https://github.com/nomannrafiq/Budget-Allocation-System/actions/workflows/e2e.yml/badge.svg)](https://github.com/nomannrafiq/Budget-Allocation-System/actions/workflows/e2e.yml)
+
 # Budget Allocation System
 
 A full-stack web application for democratic budget allocation through team voting. Team members can submit proposals, vote on them, and collectively decide how to distribute a shared budget in a fair and transparent way.
