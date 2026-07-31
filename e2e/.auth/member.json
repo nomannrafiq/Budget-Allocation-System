@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:5173",
+      "localStorage": [
+        {
+          "name": "user",
+          "value": "{\"id\":2,\"username\":\"e2e_member\",\"role\":\"member\"}"
+        }
+      ]
+    }
+  ]
+}
